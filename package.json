@@ -23,6 +23,7 @@
     "dependencies": {
         "@inertiajs/inertia": "^0.11.1",
         "@inertiajs/inertia-react": "^0.8.1",
+        "antd": "^5.21.4",
         "react": "^18.3.1",
         "react-dom": "^18.3.1"
     }

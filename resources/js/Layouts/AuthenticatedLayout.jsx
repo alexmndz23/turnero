@@ -30,6 +30,12 @@ export default function AuthenticatedLayout({ header, children }) {
                                 >
                                     Dashboard
                                 </NavLink>
+                                <NavLink
+                                    href={route('module.create')}
+                                    active={route().current('module.create')}
+                                >
+                                    Create module
+                                </NavLink>
                             </div>
                         </div>
 
@@ -133,6 +139,12 @@ export default function AuthenticatedLayout({ header, children }) {
                             active={route().current('dashboard')}
                         >
                             Dashboard
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route('module.create')}
+                            active={route().current('module.create')}
+                        >
+                            Create module
                         </ResponsiveNavLink>
                     </div>
 
