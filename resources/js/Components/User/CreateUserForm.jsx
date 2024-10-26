@@ -7,7 +7,7 @@ export default function CreateUserForm ({ onClose }) {
     name: '',
     email: '',
     password: '',
-    password_confirm: ''
+    password_confirmation: ''
   })
 
   function submit (e) {
@@ -25,8 +25,9 @@ export default function CreateUserForm ({ onClose }) {
           <Input
             type='text'
             label='Name'
-            placeholder='Enter muser name'
+            placeholder='Enter user name'
             value={data.name}
+            autoComplete='off'
             onChange={e => setData('name', e.target.value)}
           />
           {errors.name && <span className='text-red-500 text-sm'>{errors.name}</span>}
@@ -37,6 +38,7 @@ export default function CreateUserForm ({ onClose }) {
             label='Email'
             placeholder='Enter user email'
             value={data.email}
+            autoComplete='off'
             onChange={e => setData('email', e.target.value)}
           />
           {errors.email && <span className='text-red-500 text-sm'>{errors.email}</span>}
@@ -47,6 +49,7 @@ export default function CreateUserForm ({ onClose }) {
             label='Password'
             placeholder='Enter user password'
             value={data.password}
+            autoComplete='off'
             onChange={e => setData('password', e.target.value)}
           />
           {errors.password && <span className='text-red-500 text-sm'>{errors.password}</span>}
@@ -54,12 +57,13 @@ export default function CreateUserForm ({ onClose }) {
         <div>
           <Input
             type='password'
-            label='Password confirm'
-            placeholder='Enter user password confirm'
-            value={data.password_confirm}
-            onChange={e => setData('password_confirm', e.target.value)}
+            label='Password confirmation'
+            placeholder='Enter user password confirmation'
+            value={data.password_confirmation}
+            autoComplete='off'
+            onChange={e => setData('password_confirmation', e.target.value)}
           />
-          {errors.password_confirm && <span className='text-red-500 text-sm'>{errors.password_confirm}</span>}
+          {errors.password_confirmation && <span className='text-red-500 text-sm'>{errors.password_confirmation}</span>}
         </div>
         <div className='flex gap-3 justify-end py-3'>
           <Button onClick={onClose}>Cancel</Button>

@@ -71,11 +71,15 @@ export default function AuthenticatedLayout ({ header, children }) {
                 </DropdownItem>
                 <DropdownItem
                   key='logout'
-                  href={route('logout')}
-                  method='post'
-                  as={Link}
+
                 >
-                  Log Out
+                  <Link
+                    href={route('logout')}
+                    method='post'
+                    className='block'
+                  >
+                    Log Out
+                  </Link>
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>
