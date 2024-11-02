@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Module;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
 class ModuleController extends Controller
 {
@@ -13,7 +12,7 @@ class ModuleController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Module/Index', [
+        return inertia('Module/Index', [
             'modules' => Module::all(),
         ]);
     }
@@ -41,7 +40,7 @@ class ModuleController extends Controller
             'display_name' => $request->display_name
         ]);
 
-        return to_route('module.index');
+        return redirect()->back();
     }
 
     /**
@@ -75,7 +74,7 @@ class ModuleController extends Controller
             'display_name' => $request->display_name
         ]);
 
-        return to_route('module.index');
+        return redirect()->back();
     }
 
     /**
@@ -84,7 +83,6 @@ class ModuleController extends Controller
     public function destroy(string $id)
     {
         Module::destroy($id);
-
-        return to_route('module.index');
+        return redirect()->back();
     }
 }

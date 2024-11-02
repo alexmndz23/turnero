@@ -16,7 +16,7 @@ export default function DeleteUserForm ({ id, name, onClose }) {
     <form onSubmit={submit}>
       <div className='flex flex-col gap-4'>
         <div>
-          Are you sure to delete the "{name}" module?
+          Are you sure to delete the "{name}" user?
         </div>
         <div className='flex gap-3 justify-end py-3'>
           <Button onClick={onClose}>Cancel</Button>

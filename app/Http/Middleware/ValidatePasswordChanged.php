@@ -17,6 +17,11 @@ class ValidatePasswordChanged
     public function handle(Request $request, Closure $next): Response
     {
         if (!Auth::user()->password_changed) {
+
+            if ($request->path() !== '/password-change') {
+                session(['url.intended' => $request->url()]);
+            }
+
             return to_route('password.change');
         }
 

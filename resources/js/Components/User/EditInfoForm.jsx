@@ -1,8 +1,8 @@
+import React from 'react'
 import { useForm } from '@inertiajs/react'
 import { Button, Input } from '@nextui-org/react'
-import React from 'react'
 
-export default function EditUserForm ({ user, onClose }) {
+export default function EditInfoForm ({ user }) {
   const { data, setData, patch, processing, errors } = useForm({
     name: user.name,
     email: user.email
@@ -10,10 +10,7 @@ export default function EditUserForm ({ user, onClose }) {
 
   function submit (e) {
     e.preventDefault()
-    patch(`/user/${user.id}`, {
-      data,
-      onSuccess: onClose
-    })
+    patch(`/user/update-info/${user.id}`, data)
   }
 
   return (
@@ -23,7 +20,7 @@ export default function EditUserForm ({ user, onClose }) {
           <Input
             type='text'
             label='Name'
-            placeholder='Enter new user name'
+            placeholder='Enter user name'
             value={data.name}
             onChange={e => setData('name', e.target.value)}
           />
@@ -33,15 +30,14 @@ export default function EditUserForm ({ user, onClose }) {
           <Input
             type='text'
             label='Email'
-            placeholder='Enter new user email'
+            placeholder='Enter user email'
             value={data.email}
             onChange={e => setData('email', e.target.value)}
           />
           {errors.email && <span className='text-red-500 text-sm'>{errors.email}</span>}
         </div>
         <div className='flex gap-3 justify-end py-3'>
-          <Button onClick={onClose}>Cancel</Button>
-          <Button color='primary' type='submit' disabled={processing}>Save & close</Button>
+          <Button color='primary' type='submit' disabled={processing}>Save changes</Button>
         </div>
       </div>
     </form>

@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserInfoRequest;
+use App\Http\Requests\UpdateUserPasswordRequest;
 use App\Models\User;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Inertia\Inertia;
 
 class UserController extends Controller
 {
@@ -14,7 +18,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return Inertia::render('User/Index', [
+        return inertia('User/Index', [
             'users' => User::all(),
         ]);
     }
@@ -30,19 +34,12 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|lowercase|unique:users,email|max:255',
-            'password' => 'required|string|min:8|max:32|confirmed',
-            'password_confirmation' => 'required'
-        ]);
-
         User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'name' => $request->validated()['name'],
+            'email' => $request->validated()['email'],
+            'password' => Hash::make($request->validated()['password']),
         ]);
 
         return to_route('user.index');
@@ -61,15 +58,42 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return inertia('User/Edit', [
+            'user' => User::find($id),
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update_info(UpdateUserInfoRequest $request, string $id)
     {
-        //
+        try {
+            $user = User::findOrFail($id);
+            $user->update($request->validated());
+
+            return redirect()->back()->with('success', 'User updated.');
+        } catch (ModelNotFoundException $e) {
+            return redirect()->back()->with('error', 'User not found.');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Unespected error.');
+        }
+    }
+
+    public function update_password(UpdateUserPasswordRequest $request, string $id)
+    {
+        try {
+            $user = User::findOrFail($id);
+            $user->update([
+                'password' => Hash::make($request->validated()['new_password']),
+            ]);
+
+            return redirect()->back()->with('success', 'Password updated.');
+        } catch (ModelNotFoundException $e) {
+            return redirect()->back()->with('error', 'User not found.');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Unespected error.');
+        }
     }
 
     /**
@@ -77,6 +101,15 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $user = User::findOrFail($id);
+            $user->delete();
+
+            return to_route('user.index');
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
+
+    public function reset_password(Request $request, $id) {}
 }

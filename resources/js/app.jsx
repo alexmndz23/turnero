@@ -5,6 +5,7 @@ import { createInertiaApp } from '@inertiajs/react'
 import { NextUIProvider } from '@nextui-org/react'
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers'
 import { createRoot } from 'react-dom/client'
+import { Toaster } from 'react-hot-toast'
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel'
 
@@ -20,6 +21,7 @@ createInertiaApp({
 
     root.render(
       <NextUIProvider>
+        <Toaster />
         <App {...props} />
       </NextUIProvider>
     )

@@ -22,7 +22,6 @@ Route::get('/dashboard', function () {
 
 Route::middleware(['auth', 'password.changed'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/module', [ModuleController::class, 'index'])->name('module.index');
@@ -31,7 +30,10 @@ Route::middleware(['auth', 'password.changed'])->group(function () {
     Route::delete('/module/{id}', [ModuleController::class, 'destroy'])->name('module.destroy');
 
     Route::get('/user', [UserController::class, 'index'])->name('user.index');
+    Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
+    Route::patch('/user/update-info/{id}', [UserController::class, 'update_info'])->name('user.update_info');
+    Route::patch('/user/update-password/{id}', [UserController::class, 'update_password'])->name('user.update_password');
     Route::post('/user', [UserController::class, 'store'])->name('user.store');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

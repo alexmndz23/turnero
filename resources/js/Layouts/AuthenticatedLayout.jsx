@@ -63,11 +63,13 @@ export default function AuthenticatedLayout ({ header, children }) {
                 <Button variant='light'>{user.name}</Button>
               </DropdownTrigger>
               <DropdownMenu aria-label='Link Actions'>
-                <DropdownItem
-                  key='profile'
-                  href={route('profile.edit')}
-                >
-                  Profile
+                <DropdownItem>
+                  <Link
+                    href={route('user.edit', user.id)}
+                    className='block'
+                  >
+                    Profile
+                  </Link>
                 </DropdownItem>
                 <DropdownItem
                   key='logout'

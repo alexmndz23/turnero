@@ -1,5 +1,5 @@
 import { Head, Link, useForm } from '@inertiajs/react'
-import { Button, Card, CardBody, CardHeader, Input } from '@nextui-org/react'
+import { Button, Card, CardBody, CardFooter, CardHeader, Divider, Input } from '@nextui-org/react'
 import React from 'react'
 
 export default function ChangePassword () {
@@ -11,7 +11,7 @@ export default function ChangePassword () {
 
   function submit (e) {
     e.preventDefault()
-    put('/password', { data })
+    put('/password-update', data)
   }
 
   return (
@@ -20,12 +20,13 @@ export default function ChangePassword () {
 
       <div className='py-12'>
         <div className='mx-auto w-[500px] space-y-6 sm:px-6 lg:px-8 flex flex-col'>
-          <Card>
-            <CardHeader>
-              You need to update your password
-            </CardHeader>
-            <CardBody>
-              <form onSubmit={submit}>
+          <form onSubmit={submit}>
+            <Card>
+              <CardHeader>
+                You need to update your password
+              </CardHeader>
+              <Divider />
+              <CardBody>
                 <div className='flex flex-col gap-4'>
                   <div>
                     <Input
@@ -60,20 +61,23 @@ export default function ChangePassword () {
                     />
                     {errors.password_confirmation && <span className='text-red-500 text-sm'>{errors.password_confirmation}</span>}
                   </div>
-                  <div className='flex gap-3 justify-end py-3'>
-                    <Button
-                      href={route('logout')}
-                      method='post'
-                      as={Link}
-                    >
-                      Logout
-                    </Button>
-                    <Button color='primary' type='submit' disabled={processing}>Change password</Button>
-                  </div>
                 </div>
-              </form>
-            </CardBody>
-          </Card>
+              </CardBody>
+              <Divider />
+              <CardFooter>
+                <div className='w-full flex gap-3 justify-end'>
+                  <Button
+                    href={route('logout')}
+                    method='post'
+                    as={Link}
+                  >
+                    Logout
+                  </Button>
+                  <Button color='primary' type='submit' disabled={processing}>Change password</Button>
+                </div>
+              </CardFooter>
+            </Card>
+          </form>
         </div>
       </div>
     </>

@@ -54,7 +54,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('password-change', [PasswordController::class, 'change'])->name('password.change');
 
-    Route::put('password', [PasswordController::class, 'update'])->name('password.update');
+    Route::put('password-update', [PasswordController::class, 'update'])->name('password.update');
+
+    Route::put('password-reset', [PasswordController::class, 'reset'])->name('password.reset');
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
