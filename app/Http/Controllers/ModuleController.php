@@ -2,19 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreModuleRequest;
 use App\Models\Area;
 use App\Models\Module;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class AreaController extends Controller
+class ModuleController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return inertia('Area/Index', [
+        return inertia('Module/Index', [
+            'modules' => Module::with(['user', 'area'])->get(),
+            'users' => User::doesntHave('module')->get(),
             'areas' => Area::all()
         ]);
     }
@@ -30,18 +33,9 @@ class AreaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreModuleRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'display_name' => 'nullable|string|max:255',
-        ]);
-
-        Area::create([
-            'name' => $request->name,
-            'display_name' => $request->display_name
-        ]);
-
+        Module::create($request->validated());
         return redirect()->back();
     }
 
@@ -66,17 +60,7 @@ class AreaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'display_name' => 'nullable|string|max:255'
-        ]);
-
-        Area::where('id', $id)->update([
-            'name' => $request->name,
-            'display_name' => $request->display_name
-        ]);
-
-        return redirect()->back();
+        //
     }
 
     /**
@@ -84,7 +68,6 @@ class AreaController extends Controller
      */
     public function destroy(string $id)
     {
-        Area::destroy($id);
-        return redirect()->back();
+        //
     }
 }

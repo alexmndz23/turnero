@@ -55,6 +55,14 @@ export default function AuthenticatedLayout ({ header, children }) {
               Users
             </NavLink>
           </NavbarItem>
+          <NavbarItem>
+            <NavLink
+              href={route('module.index')}
+              active={route().current('module.index')}
+            >
+              Modules
+            </NavLink>
+          </NavbarItem>
         </NavbarContent>
         <NavbarContent justify='end'>
           <NavbarItem className='hidden lg:flex'>
