@@ -28,4 +28,12 @@ class StoreModuleRequest extends FormRequest
             'area_id' => 'nullable|exists:areas,id'
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            'user_id' => 'user',
+            'area_id' => 'area'
+        ];
+    }
 }
