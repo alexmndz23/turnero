@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Module;
+use App\Models\Area;
 use Illuminate\Http\Request;
 
-class ModuleController extends Controller
+class AreaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return inertia('Module/Index', [
-            'modules' => Module::all(),
+        return inertia('Area/Index', [
+            'areas' => Area::all(),
         ]);
     }
 
@@ -35,7 +35,7 @@ class ModuleController extends Controller
             'display_name' => 'nullable|string|max:255',
         ]);
 
-        Module::create([
+        Area::create([
             'name' => $request->name,
             'display_name' => $request->display_name
         ]);
@@ -69,7 +69,7 @@ class ModuleController extends Controller
             'display_name' => 'nullable|string|max:255'
         ]);
 
-        Module::where('id', $id)->update([
+        Area::where('id', $id)->update([
             'name' => $request->name,
             'display_name' => $request->display_name
         ]);
@@ -82,7 +82,7 @@ class ModuleController extends Controller
      */
     public function destroy(string $id)
     {
-        Module::destroy($id);
+        Area::destroy($id);
         return redirect()->back();
     }
 }

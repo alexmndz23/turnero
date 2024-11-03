@@ -2,15 +2,15 @@ import { useForm } from '@inertiajs/react'
 import { Button, Input } from '@nextui-org/react'
 import React from 'react'
 
-export default function EditModuleForm ({ module, onClose }) {
+export default function EditAreaForm ({ area, onClose }) {
   const { data, setData, patch, processing, errors } = useForm({
-    name: module.name,
-    display_name: module.display_name
+    name: area.name,
+    display_name: area.display_name
   })
 
   function submit (e) {
     e.preventDefault()
-    patch(`/module/${module.id}`, {
+    patch(`/area/${area.id}`, {
       data,
       onSuccess: onClose
     })
@@ -23,7 +23,7 @@ export default function EditModuleForm ({ module, onClose }) {
           <Input
             type='text'
             label='Name'
-            placeholder='Enter module name'
+            placeholder='Enter area name'
             value={data.name}
             onChange={e => setData('name', e.target.value)}
           />
@@ -33,7 +33,7 @@ export default function EditModuleForm ({ module, onClose }) {
           <Input
             type='text'
             label='Display name'
-            placeholder='Enter module display name'
+            placeholder='Enter area display name'
             value={data.display_name}
             onChange={e => setData('display_name', e.target.value)}
           />
