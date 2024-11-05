@@ -41,6 +41,14 @@ export default function AuthenticatedLayout ({ header, children }) {
           </NavbarItem>
           <NavbarItem>
             <NavLink
+              href={route('module.index')}
+              active={route().current('module.index')}
+            >
+              Modules
+            </NavLink>
+          </NavbarItem>
+          <NavbarItem>
+            <NavLink
               href={route('area.index')}
               active={route().current('area.index')}
             >
@@ -53,14 +61,6 @@ export default function AuthenticatedLayout ({ header, children }) {
               active={route().current('user.index')}
             >
               Users
-            </NavLink>
-          </NavbarItem>
-          <NavbarItem>
-            <NavLink
-              href={route('module.index')}
-              active={route().current('module.index')}
-            >
-              Modules
             </NavLink>
           </NavbarItem>
         </NavbarContent>

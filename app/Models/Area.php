@@ -10,4 +10,9 @@ class Area extends Model
         'name',
         'display_name'
     ];
+
+    public function modules()
+    {
+        return $this->hasMany(Module::class);
+    }
 }

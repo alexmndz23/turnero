@@ -27,6 +27,7 @@ export default function CreateUserForm ({ onClose }) {
             label='Name'
             placeholder='Enter user name'
             value={data.name}
+            variant='underlined'
             autoComplete='off'
             onChange={e => setData('name', e.target.value)}
           />
@@ -38,6 +39,7 @@ export default function CreateUserForm ({ onClose }) {
             label='Email'
             placeholder='Enter user email'
             value={data.email}
+            variant='underlined'
             autoComplete='off'
             onChange={e => setData('email', e.target.value)}
           />
@@ -49,6 +51,7 @@ export default function CreateUserForm ({ onClose }) {
             label='Password'
             placeholder='Enter user password'
             value={data.password}
+            variant='underlined'
             autoComplete='off'
             onChange={e => setData('password', e.target.value)}
           />
@@ -60,6 +63,7 @@ export default function CreateUserForm ({ onClose }) {
             label='Password confirmation'
             placeholder='Enter user password confirmation'
             value={data.password_confirmation}
+            variant='underlined'
             autoComplete='off'
             onChange={e => setData('password_confirmation', e.target.value)}
           />

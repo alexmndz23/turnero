@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Head } from '@inertiajs/react'
+import React, { useEffect, useState } from 'react'
+import { Head, usePage } from '@inertiajs/react'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import {
   Button,
@@ -16,13 +16,26 @@ import {
   useDisclosure
 } from '@nextui-org/react'
 import { PiPencilSimpleLine, PiTrash } from 'react-icons/pi'
-import EditModuleForm from '@/Components/Module/EditModuleForm'
 import CreateModuleForm from '@/Components/Module/CreateModuleForm'
+import EditModuleForm from '@/Components/Module/EditModuleForm'
 import DeleteModuleForm from '@/Components/Module/DeleteModuleForm'
+import toast from 'react-hot-toast'
 
 export default function Index ({ modules, users, areas }) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [modalContent, setModalContent] = useState({})
+
+  const { flash } = usePage().props
+
+  useEffect(() => {
+    if (flash.success) {
+      toast.success(flash.success)
+      onClose()
+    }
+    if (flash.error) {
+      toast.error(flash.error)
+    }
+  }, [flash])
 
   function showCreateModal () {
     setModalContent({
@@ -35,7 +48,7 @@ export default function Index ({ modules, users, areas }) {
   function showEditModal (module) {
     setModalContent({
       title: 'Edit module',
-      body: <EditModuleForm module={module} onClose={onClose} />
+      body: <EditModuleForm module={module} users={users} areas={areas} onClose={onClose} />
     })
     onOpen()
   }
@@ -70,8 +83,8 @@ export default function Index ({ modules, users, areas }) {
             <TableHeader>
               <TableColumn>NAME</TableColumn>
               <TableColumn>DISPLAY NAME</TableColumn>
-              <TableColumn>USER</TableColumn>
               <TableColumn>AREA</TableColumn>
+              <TableColumn>USER</TableColumn>
               <TableColumn width={100}>ACTIONS</TableColumn>
             </TableHeader>
             <TableBody items={modules}>
@@ -79,8 +92,8 @@ export default function Index ({ modules, users, areas }) {
                 <TableRow key={module.id}>
                   <TableCell>{module.name}</TableCell>
                   <TableCell>{module.display_name}</TableCell>
-                  <TableCell>{module?.user.name}</TableCell>
-                  <TableCell>{module?.area.name}</TableCell>
+                  <TableCell>{module?.area?.name}</TableCell>
+                  <TableCell>{module?.user?.name}</TableCell>
                   <TableCell>
                     <Button isIconOnly size='sm' variant='light' onClick={() => showEditModal(module)}>
                       <PiPencilSimpleLine size={20} />

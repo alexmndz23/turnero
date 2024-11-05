@@ -10,7 +10,7 @@ export default function CreateModuleForm ({ users, areas, onClose }) {
     area_id: ''
   })
 
-  function submit (e) {
+  function onSubmit (e) {
     e.preventDefault()
     post('/module', {
       data,
@@ -19,7 +19,7 @@ export default function CreateModuleForm ({ users, areas, onClose }) {
   }
 
   return (
-    <form onSubmit={submit}>
+    <form onSubmit={onSubmit}>
       <div className='flex flex-col gap-4'>
         <div>
           <Input
@@ -27,6 +27,7 @@ export default function CreateModuleForm ({ users, areas, onClose }) {
             label='Name'
             placeholder='Enter module name'
             value={data.name}
+            variant='underlined'
             onChange={e => setData('name', e.target.value)}
           />
           {errors.name && <span className='text-red-500 text-sm'>{errors.name}</span>}
@@ -37,6 +38,7 @@ export default function CreateModuleForm ({ users, areas, onClose }) {
             label='Display name'
             placeholder='Enter module display name'
             value={data.display_name}
+            variant='underlined'
             onChange={e => setData('display_name', e.target.value)}
           />
           {errors.display_name && <span className='text-red-500 text-sm'>{errors.display_name}</span>}
@@ -46,9 +48,14 @@ export default function CreateModuleForm ({ users, areas, onClose }) {
             label='User'
             placeholder='Select module user'
             items={users}
+            variant='underlined'
             onChange={e => setData('user_id', e.target.value)}
           >
-            {(user) => <SelectItem key={user.id} value={user.id}>{user.name}</SelectItem>}
+            {(user) => {
+              if (!user.module) {
+                return <SelectItem key={user.id} value={user.id}>{user.name}</SelectItem>
+              }
+            }}
           </Select>
           {errors.user_id && <span className='text-red-500 text-sm'>{errors.user_id}</span>}
         </div>
@@ -57,6 +64,7 @@ export default function CreateModuleForm ({ users, areas, onClose }) {
             label='Area'
             placeholder='Select module area'
             items={areas}
+            variant='underlined'
             onChange={e => setData('area_id', e.target.value)}
           >
             {(area) => <SelectItem key={area.id} value={area.id}>{area.name}</SelectItem>}

@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreModuleRequest;
+use App\Http\Requests\UpdateModuleRequest;
 use App\Models\Area;
 use App\Models\Module;
 use App\Models\User;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class ModuleController extends Controller
@@ -17,7 +20,7 @@ class ModuleController extends Controller
     {
         return inertia('Module/Index', [
             'modules' => Module::with(['user', 'area'])->get(),
-            'users' => User::doesntHave('module')->get(),
+            'users' => User::with(['module'])->get(),
             'areas' => Area::all()
         ]);
     }
@@ -35,8 +38,12 @@ class ModuleController extends Controller
      */
     public function store(StoreModuleRequest $request)
     {
-        Module::create($request->validated());
-        return redirect()->back();
+        try {
+            Module::create($request->validated());
+            return back()->with('success', 'Module created');
+        } catch (Exception $e) {
+            return back()->with('error', 'Unexpected error');
+        }
     }
 
     /**
@@ -58,9 +65,18 @@ class ModuleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateModuleRequest $request, string $id)
     {
-        //
+        try {
+            $module = Module::findOrFail($id);
+            $module->update($request->validated());
+
+            return back()->with('success', 'Module updated');
+        } catch (ModelNotFoundException $e) {
+            return back()->with('error', 'Module not found');
+        } catch (Exception $e) {
+            return back()->with('error', 'Unexpected error');
+        }
     }
 
     /**
@@ -68,6 +84,15 @@ class ModuleController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $module = Module::findOrFail($id);
+            $module->delete();
+
+            return back()->with('success', 'Module deleted');
+        } catch (ModelNotFoundException $e) {
+            return back()->with('error', 'Module not found');
+        } catch (Exception $e) {
+            return back()->with('error', 'Unexpected error');
+        }
     }
 }

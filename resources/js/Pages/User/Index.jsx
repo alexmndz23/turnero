@@ -69,7 +69,9 @@ export default function Index ({ users }) {
           <Table isCompact isStriped>
             <TableHeader>
               <TableColumn>NAME</TableColumn>
-              <TableColumn width={450}>EMAIL</TableColumn>
+              <TableColumn width={250}>EMAIL</TableColumn>
+              <TableColumn width={200}>MODULE</TableColumn>
+              <TableColumn width={200}>AREA</TableColumn>
               <TableColumn width={200}>PASSWORD CHANGED</TableColumn>
               <TableColumn width={100}>ACTIONS</TableColumn>
             </TableHeader>
@@ -78,6 +80,8 @@ export default function Index ({ users }) {
                 <TableRow key={user.id}>
                   <TableCell>{user.name}</TableCell>
                   <TableCell>{user.email}</TableCell>
+                  <TableCell>{user.module?.name}</TableCell>
+                  <TableCell>{user.module?.area?.name}</TableCell>
                   <TableCell>
                     {
                       user.password_changed

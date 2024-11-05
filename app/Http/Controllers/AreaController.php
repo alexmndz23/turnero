@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Area;
-use App\Models\Module;
-use App\Models\User;
 use Illuminate\Http\Request;
 
 class AreaController extends Controller
@@ -15,7 +13,7 @@ class AreaController extends Controller
     public function index()
     {
         return inertia('Area/Index', [
-            'areas' => Area::all()
+            'areas' => Area::with(['modules'])->get()
         ]);
     }
 

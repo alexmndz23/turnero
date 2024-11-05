@@ -19,7 +19,7 @@ class UserController extends Controller
     public function index()
     {
         return inertia('User/Index', [
-            'users' => User::all(),
+            'users' => User::with(['module.area'])->get(),
         ]);
     }
 
@@ -59,7 +59,7 @@ class UserController extends Controller
     public function edit(string $id)
     {
         return inertia('User/Edit', [
-            'user' => User::find($id),
+            'user' => User::with(['module.area'])->findOrFail($id),
         ]);
     }
 
@@ -72,11 +72,11 @@ class UserController extends Controller
             $user = User::findOrFail($id);
             $user->update($request->validated());
 
-            return redirect()->back()->with('success', 'User updated.');
+            return redirect()->back()->with('success', 'User updated');
         } catch (ModelNotFoundException $e) {
-            return redirect()->back()->with('error', 'User not found.');
+            return redirect()->back()->with('error', 'User not found');
         } catch (Exception $e) {
-            return redirect()->back()->with('error', 'Unespected error.');
+            return redirect()->back()->with('error', 'Unexpected error');
         }
     }
 
@@ -92,7 +92,7 @@ class UserController extends Controller
         } catch (ModelNotFoundException $e) {
             return redirect()->back()->with('error', 'User not found.');
         } catch (Exception $e) {
-            return redirect()->back()->with('error', 'Unespected error.');
+            return redirect()->back()->with('error', 'Unexpected error.');
         }
     }
 

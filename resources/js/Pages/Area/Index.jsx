@@ -16,8 +16,8 @@ import {
   useDisclosure
 } from '@nextui-org/react'
 import { PiPencilSimpleLine, PiTrash } from 'react-icons/pi'
-import EditAreaForm from '@/Components/Area/EditAreaForm'
 import CreateAreaForm from '@/Components/Area/CreateAreaForm'
+import EditAreaForm from '@/Components/Area/EditAreaForm'
 import DeleteAreaForm from '@/Components/Area/DeleteAreaForm'
 
 export default function Index ({ areas }) {
@@ -69,7 +69,8 @@ export default function Index ({ areas }) {
           <Table isCompact isStriped>
             <TableHeader>
               <TableColumn>NAME</TableColumn>
-              <TableColumn width={400}>DISPLAY NAME</TableColumn>
+              <TableColumn width={300}>DISPLAY NAME</TableColumn>
+              <TableColumn width={400}>MODULES</TableColumn>
               <TableColumn width={100}>ACTIONS</TableColumn>
             </TableHeader>
             <TableBody items={areas}>
@@ -77,6 +78,7 @@ export default function Index ({ areas }) {
                 <TableRow key={area.id}>
                   <TableCell>{area.name}</TableCell>
                   <TableCell>{area.display_name}</TableCell>
+                  <TableCell>{area.modules?.map((module) => module.name).join(', ')}</TableCell>
                   <TableCell>
                     <Button isIconOnly size='sm' variant='light' onClick={() => showEditModal(area)}>
                       <PiPencilSimpleLine size={20} />

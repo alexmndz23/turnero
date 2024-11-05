@@ -1,6 +1,6 @@
+import React from 'react'
 import { useForm } from '@inertiajs/react'
 import { Button, Input } from '@nextui-org/react'
-import React from 'react'
 
 export default function EditAreaForm ({ area, onClose }) {
   const { data, setData, patch, processing, errors } = useForm({
@@ -25,6 +25,7 @@ export default function EditAreaForm ({ area, onClose }) {
             label='Name'
             placeholder='Enter area name'
             value={data.name}
+            variant='underlined'
             onChange={e => setData('name', e.target.value)}
           />
           {errors.name && <span className='text-red-500 text-sm'>{errors.name}</span>}
@@ -35,6 +36,7 @@ export default function EditAreaForm ({ area, onClose }) {
             label='Display name'
             placeholder='Enter area display name'
             value={data.display_name}
+            variant='underlined'
             onChange={e => setData('display_name', e.target.value)}
           />
           {errors.display_name && <span className='text-red-500 text-sm'>{errors.display_name}</span>}

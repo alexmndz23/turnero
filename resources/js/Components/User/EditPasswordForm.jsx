@@ -26,6 +26,7 @@ export default function EditPasswordForm ({ user }) {
             label='Current password'
             placeholder='Enter current password'
             value={data.current_password}
+            variant='underlined'
             onChange={e => setData('current_password', e.target.value)}
           />
           {errors.current_password && <span className='text-red-500 text-sm'>{errors.current_password}</span>}
@@ -36,6 +37,7 @@ export default function EditPasswordForm ({ user }) {
             label='New password'
             placeholder='Enter new password'
             value={data.new_password}
+            variant='underlined'
             onChange={e => setData('new_password', e.target.value)}
           />
           {errors.new_password && <span className='text-red-500 text-sm'>{errors.new_password}</span>}
@@ -46,6 +48,7 @@ export default function EditPasswordForm ({ user }) {
             label='New password'
             placeholder='Enter new password confirmation'
             value={data.new_password_confirmation}
+            variant='underlined'
             onChange={e => setData('new_password_confirmation', e.target.value)}
           />
           {errors.new_password_confirmation && <span className='text-red-500 text-sm'>{errors.new_password_confirmation}</span>}

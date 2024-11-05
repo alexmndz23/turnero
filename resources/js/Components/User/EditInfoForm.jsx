@@ -22,6 +22,7 @@ export default function EditInfoForm ({ user }) {
             label='Name'
             placeholder='Enter user name'
             value={data.name}
+            variant='underlined'
             onChange={e => setData('name', e.target.value)}
           />
           {errors.name && <span className='text-red-500 text-sm'>{errors.name}</span>}
@@ -32,6 +33,7 @@ export default function EditInfoForm ({ user }) {
             label='Email'
             placeholder='Enter user email'
             value={data.email}
+            variant='underlined'
             onChange={e => setData('email', e.target.value)}
           />
           {errors.email && <span className='text-red-500 text-sm'>{errors.email}</span>}
