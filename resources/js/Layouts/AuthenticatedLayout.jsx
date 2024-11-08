@@ -1,6 +1,5 @@
 import ApplicationLogo from '@/Components/ApplicationLogo'
 import NavLink from '@/Components/NavLink'
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink'
 import { usePage, Link } from '@inertiajs/react'
 import {
   NavbarBrand,
@@ -13,12 +12,9 @@ import {
   DropdownItem,
   Navbar
 } from '@nextui-org/react'
-import { useState } from 'react'
 
 export default function AuthenticatedLayout ({ header, children }) {
   const user = usePage().props.auth.user
-
-  const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false)
 
   return (
     <>
@@ -61,6 +57,14 @@ export default function AuthenticatedLayout ({ header, children }) {
               active={route().current('user.index')}
             >
               Users
+            </NavLink>
+          </NavbarItem>
+          <NavbarItem>
+            <NavLink
+              href={route('turn_station.index')}
+              active={route().current('turn_station.index')}
+            >
+              Turn stations
             </NavLink>
           </NavbarItem>
         </NavbarContent>
