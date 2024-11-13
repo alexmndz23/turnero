@@ -112,7 +112,7 @@ export default function Index ({ turnStations }) {
                           Edit turn station
                         </DropdownItem>
                         <DropdownItem
-                          key='delete-aturn-station'
+                          key='delete-turn-station'
                           color='danger'
                           className='text-danger'
                           startContent={<PiTrash size={20} />}
