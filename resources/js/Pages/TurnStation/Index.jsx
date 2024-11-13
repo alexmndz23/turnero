@@ -3,6 +3,10 @@ import { Head, usePage } from '@inertiajs/react'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import {
   Button,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
   Modal,
   ModalBody,
   ModalContent,
@@ -15,7 +19,7 @@ import {
   TableRow,
   useDisclosure
 } from '@nextui-org/react'
-import { PiPencilSimpleLine, PiTrash } from 'react-icons/pi'
+import { PiDotsThreeVerticalBold, PiPencilSimpleLine, PiTrash } from 'react-icons/pi'
 import CreateTurnStationForm from '@/Components/TurnStation/CreateTurnStationForm'
 import EditTurnStationForm from '@/Components/TurnStation/EditTurnStationForm'
 import DeleteTurnStationForm from '@/Components/TurnStation/DeleteTurnStationForm'
@@ -84,7 +88,7 @@ export default function Index ({ turnStations }) {
               <TableColumn>NAME</TableColumn>
               <TableColumn width={300}>DESCRIPTION</TableColumn>
               <TableColumn width={400}>LOCATION</TableColumn>
-              <TableColumn width={100}>ACTIONS</TableColumn>
+              <TableColumn width={50} align='center'>ACTIONS</TableColumn>
             </TableHeader>
             <TableBody items={turnStations}>
               {(turnStation) => (
@@ -93,12 +97,31 @@ export default function Index ({ turnStations }) {
                   <TableCell>{turnStation.description}</TableCell>
                   <TableCell>{turnStation.location}</TableCell>
                   <TableCell>
-                    <Button isIconOnly size='sm' variant='light' onClick={() => showEditModal(turnStation)}>
-                      <PiPencilSimpleLine size={20} />
-                    </Button>
-                    <Button isIconOnly size='sm' variant='light' color='danger' onClick={() => showDeleteModal(turnStation)}>
-                      <PiTrash size={20} />
-                    </Button>
+                    <Dropdown>
+                      <DropdownTrigger>
+                        <Button isIconOnly size='sm' variant='light'>
+                          <PiDotsThreeVerticalBold size={20} />
+                        </Button>
+                      </DropdownTrigger>
+                      <DropdownMenu>
+                        <DropdownItem
+                          key='edit-turn-station'
+                          startContent={<PiPencilSimpleLine size={20} />}
+                          onClick={() => showEditModal(turnStation)}
+                        >
+                          Edit turn station
+                        </DropdownItem>
+                        <DropdownItem
+                          key='delete-aturn-station'
+                          color='danger'
+                          className='text-danger'
+                          startContent={<PiTrash size={20} />}
+                          onClick={() => showDeleteModal(turnStation)}
+                        >
+                          Delete turn station
+                        </DropdownItem>
+                      </DropdownMenu>
+                    </Dropdown>
                   </TableCell>
                 </TableRow>
               )}

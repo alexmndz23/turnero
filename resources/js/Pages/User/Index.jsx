@@ -77,7 +77,7 @@ export default function Index ({ users }) {
               <TableColumn width={200}>MODULE</TableColumn>
               <TableColumn width={200}>AREA</TableColumn>
               <TableColumn width={200}>PASSWORD CHANGED</TableColumn>
-              <TableColumn width={32} />
+              <TableColumn width={50} align='center'>ACTIONS</TableColumn>
             </TableHeader>
             <TableBody items={users}>
               {(user) => (
@@ -103,7 +103,7 @@ export default function Index ({ users }) {
                       <DropdownMenu>
                         <DropdownItem
                           key='reset-password'
-                          startContent={<PiArrowCounterClockwise size={16} />}
+                          startContent={<PiArrowCounterClockwise size={20} />}
                           onClick={() => showEditModal(user)}
                         >
                           Reset password
@@ -112,7 +112,7 @@ export default function Index ({ users }) {
                           key='delete-user'
                           color='danger'
                           className='text-danger'
-                          startContent={<PiTrash size={16} />}
+                          startContent={<PiTrash size={20} />}
                           onClick={() => showDeleteModal(user)}
                         >
                           Delete user

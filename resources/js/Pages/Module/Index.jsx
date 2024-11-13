@@ -3,6 +3,10 @@ import { Head, usePage } from '@inertiajs/react'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import {
   Button,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
   Modal,
   ModalBody,
   ModalContent,
@@ -15,7 +19,7 @@ import {
   TableRow,
   useDisclosure
 } from '@nextui-org/react'
-import { PiPencilSimpleLine, PiTrash } from 'react-icons/pi'
+import { PiDotsThreeVerticalBold, PiPencilSimpleLine, PiTrash } from 'react-icons/pi'
 import CreateModuleForm from '@/Components/Module/CreateModuleForm'
 import EditModuleForm from '@/Components/Module/EditModuleForm'
 import DeleteModuleForm from '@/Components/Module/DeleteModuleForm'
@@ -84,7 +88,7 @@ export default function Index ({ modules, areas, users }) {
               <TableColumn>NAME</TableColumn>
               <TableColumn>DISPLAY NAME</TableColumn>
               <TableColumn>AREA</TableColumn>
-              <TableColumn width={100}>ACTIONS</TableColumn>
+              <TableColumn width={50} align='center'>ACTIONS</TableColumn>
             </TableHeader>
             <TableBody items={modules}>
               {(module) => (
@@ -93,12 +97,31 @@ export default function Index ({ modules, areas, users }) {
                   <TableCell>{module.display_name}</TableCell>
                   <TableCell>{module?.area?.name}</TableCell>
                   <TableCell>
-                    <Button isIconOnly size='sm' variant='light' onClick={() => showEditModal(module)}>
-                      <PiPencilSimpleLine size={20} />
-                    </Button>
-                    <Button isIconOnly size='sm' variant='light' color='danger' onClick={() => showDeleteModal(module)}>
-                      <PiTrash size={20} />
-                    </Button>
+                    <Dropdown>
+                      <DropdownTrigger>
+                        <Button isIconOnly size='sm' variant='light'>
+                          <PiDotsThreeVerticalBold size={20} />
+                        </Button>
+                      </DropdownTrigger>
+                      <DropdownMenu>
+                        <DropdownItem
+                          key='edit-module'
+                          startContent={<PiPencilSimpleLine size={16} />}
+                          onClick={() => showEditModal(module)}
+                        >
+                          Edit module
+                        </DropdownItem>
+                        <DropdownItem
+                          key='delete-module'
+                          color='danger'
+                          className='text-danger'
+                          startContent={<PiTrash size={16} />}
+                          onClick={() => showDeleteModal(module)}
+                        >
+                          Delete module
+                        </DropdownItem>
+                      </DropdownMenu>
+                    </Dropdown>
                   </TableCell>
                 </TableRow>
               )}
