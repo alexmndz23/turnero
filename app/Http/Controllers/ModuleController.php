@@ -10,6 +10,7 @@ use App\Models\User;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ModuleController extends Controller
 {
@@ -19,9 +20,9 @@ class ModuleController extends Controller
     public function index()
     {
         return inertia('Module/Index', [
-            'modules' => Module::with(['user', 'area'])->get(),
-            'users' => User::with(['module'])->get(),
-            'areas' => Area::all()
+            'modules' => Module::with(['users', 'area'])->get(),
+            'areas' => Area::all(),
+            'users' => User::all()
         ]);
     }
 
@@ -68,13 +69,27 @@ class ModuleController extends Controller
     public function update(UpdateModuleRequest $request, string $id)
     {
         try {
-            $module = Module::findOrFail($id);
-            $module->update($request->validated());
+            DB::beginTransaction();
 
+            $module = Module::findOrFail($id);
+            $module->update([
+                'name' => $request->name,
+                'display_name' => $request->display_name,
+                'area_id' => $request->area_id
+            ]);
+
+            User::where('module_id', $module->id)->update(['module_id' => null]);
+            if (!empty($request->user_ids)) {
+                User::whereIn('id', $request->user_ids)->update(['module_id' => $module->id]);
+            }
+
+            DB::commit();
             return back()->with('success', 'Module updated');
         } catch (ModelNotFoundException $e) {
+            DB::rollBack();
             return back()->with('error', 'Module not found');
         } catch (Exception $e) {
+            DB::rollBack();
             return back()->with('error', 'Unexpected error');
         }
     }

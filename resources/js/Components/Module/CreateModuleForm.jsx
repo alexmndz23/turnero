@@ -2,7 +2,7 @@ import { useForm } from '@inertiajs/react'
 import { Button, Input, Select, SelectItem } from '@nextui-org/react'
 import React from 'react'
 
-export default function CreateModuleForm ({ users, areas, onClose }) {
+export default function CreateModuleForm ({ areas, onClose }) {
   const { data, setData, post, processing, errors } = useForm({
     name: '',
     display_name: '',
@@ -42,22 +42,6 @@ export default function CreateModuleForm ({ users, areas, onClose }) {
             onChange={e => setData('display_name', e.target.value)}
           />
           {errors.display_name && <span className='text-red-500 text-sm'>{errors.display_name}</span>}
-        </div>
-        <div>
-          <Select
-            label='User'
-            placeholder='Select module user'
-            items={users}
-            variant='underlined'
-            onChange={e => setData('user_id', e.target.value)}
-          >
-            {(user) => {
-              if (!user.module) {
-                return <SelectItem key={user.id} value={user.id}>{user.name}</SelectItem>
-              }
-            }}
-          </Select>
-          {errors.user_id && <span className='text-red-500 text-sm'>{errors.user_id}</span>}
         </div>
         <div>
           <Select

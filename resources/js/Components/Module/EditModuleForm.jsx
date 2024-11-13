@@ -2,12 +2,12 @@ import React from 'react'
 import { useForm } from '@inertiajs/react'
 import { Button, Input, Select, SelectItem } from '@nextui-org/react'
 
-export default function EditModuleForm ({ module, users, areas, onClose }) {
+export default function EditModuleForm ({ module, areas, users, onClose }) {
   const { data, setData, patch, processing, errors } = useForm({
     name: module.name ?? '',
     display_name: module.display_name ?? '',
-    user_id: module.user_id ?? '',
-    area_id: module.area_id ?? ''
+    area_id: module.area_id ?? '',
+    user_ids: module.users.map((user) => user.id.toString())
   })
 
   function onSubmit (e) {
@@ -55,16 +55,17 @@ export default function EditModuleForm ({ module, users, areas, onClose }) {
         </div>
         <div>
           <Select
-            label='User'
-            placeholder='Select module user'
+            label='Usuarios'
+            placeholder='Select module users'
             items={users}
-            defaultSelectedKeys={[module?.user_id?.toString()]}
+            selectedKeys={data.user_ids}
             variant='underlined'
-            onChange={e => setData('user_id', e.target.value)}
+            onSelectionChange={e => setData('user_ids', [...e.keys()])}
+            selectionMode='multiple'
           >
             {(user) => <SelectItem key={user.id} value={user.id}>{user.name}</SelectItem>}
           </Select>
-          {errors.user_id && <span className='text-red-500 text-sm'>{errors.user_id}</span>}
+          {errors.user_ids && <span className='text-red-500 text-sm'>{errors.user_ids}</span>}
         </div>
         <div className='flex gap-3 justify-end py-3'>
           <Button onClick={onClose}>Cancel</Button>

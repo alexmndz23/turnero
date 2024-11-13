@@ -21,7 +21,7 @@ import EditModuleForm from '@/Components/Module/EditModuleForm'
 import DeleteModuleForm from '@/Components/Module/DeleteModuleForm'
 import toast from 'react-hot-toast'
 
-export default function Index ({ modules, users, areas }) {
+export default function Index ({ modules, areas, users }) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [modalContent, setModalContent] = useState({})
 
@@ -40,7 +40,7 @@ export default function Index ({ modules, users, areas }) {
   function showCreateModal () {
     setModalContent({
       title: 'Create module',
-      body: <CreateModuleForm users={users} areas={areas} onClose={onClose} />
+      body: <CreateModuleForm areas={areas} users={users} onClose={onClose} />
     })
     onOpen()
   }
@@ -48,7 +48,7 @@ export default function Index ({ modules, users, areas }) {
   function showEditModal (module) {
     setModalContent({
       title: 'Edit module',
-      body: <EditModuleForm module={module} users={users} areas={areas} onClose={onClose} />
+      body: <EditModuleForm module={module} areas={areas} users={users} onClose={onClose} />
     })
     onOpen()
   }
@@ -84,7 +84,6 @@ export default function Index ({ modules, users, areas }) {
               <TableColumn>NAME</TableColumn>
               <TableColumn>DISPLAY NAME</TableColumn>
               <TableColumn>AREA</TableColumn>
-              <TableColumn>USER</TableColumn>
               <TableColumn width={100}>ACTIONS</TableColumn>
             </TableHeader>
             <TableBody items={modules}>
@@ -93,7 +92,6 @@ export default function Index ({ modules, users, areas }) {
                   <TableCell>{module.name}</TableCell>
                   <TableCell>{module.display_name}</TableCell>
                   <TableCell>{module?.area?.name}</TableCell>
-                  <TableCell>{module?.user?.name}</TableCell>
                   <TableCell>
                     <Button isIconOnly size='sm' variant='light' onClick={() => showEditModal(module)}>
                       <PiPencilSimpleLine size={20} />

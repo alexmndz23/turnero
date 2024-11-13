@@ -24,7 +24,6 @@ class StoreModuleRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'display_name' => 'nullable|string|max:255',
-            'user_id' => 'nullable|exists:users,id|unique:modules,user_id',
             'area_id' => 'nullable|exists:areas,id'
         ];
     }
@@ -32,7 +31,6 @@ class StoreModuleRequest extends FormRequest
     public function attributes()
     {
         return [
-            'user_id' => 'user',
             'area_id' => 'area'
         ];
     }

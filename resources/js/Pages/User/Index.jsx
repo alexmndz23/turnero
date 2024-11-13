@@ -3,6 +3,10 @@ import { Head } from '@inertiajs/react'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import {
   Button,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
   Modal,
   ModalBody,
   ModalContent,
@@ -15,7 +19,7 @@ import {
   TableRow,
   useDisclosure
 } from '@nextui-org/react'
-import { PiCheckBold, PiPencilSimpleLine, PiTrash, PiXBold } from 'react-icons/pi'
+import { PiArrowCounterClockwise, PiCheckBold, PiDotsThreeVerticalBold, PiTrash, PiXBold } from 'react-icons/pi'
 import EditUserForm from '@/Components/User/EditUserForm'
 import CreateUserForm from '@/Components/User/CreateUserForm'
 import DeleteUserForm from '@/Components/User/DeleteUserForm'
@@ -73,7 +77,7 @@ export default function Index ({ users }) {
               <TableColumn width={200}>MODULE</TableColumn>
               <TableColumn width={200}>AREA</TableColumn>
               <TableColumn width={200}>PASSWORD CHANGED</TableColumn>
-              <TableColumn width={100}>ACTIONS</TableColumn>
+              <TableColumn width={32} />
             </TableHeader>
             <TableBody items={users}>
               {(user) => (
@@ -90,12 +94,31 @@ export default function Index ({ users }) {
                     }
                   </TableCell>
                   <TableCell>
-                    <Button isIconOnly size='sm' variant='light' onClick={() => showEditModal(user)}>
-                      <PiPencilSimpleLine size={20} />
-                    </Button>
-                    <Button isIconOnly size='sm' variant='light' color='danger' onClick={() => showDeleteModal(user)}>
-                      <PiTrash size={20} />
-                    </Button>
+                    <Dropdown>
+                      <DropdownTrigger>
+                        <Button isIconOnly size='sm' variant='light'>
+                          <PiDotsThreeVerticalBold size={20} />
+                        </Button>
+                      </DropdownTrigger>
+                      <DropdownMenu>
+                        <DropdownItem
+                          key='reset-password'
+                          startContent={<PiArrowCounterClockwise size={16} />}
+                          onClick={() => showEditModal(user)}
+                        >
+                          Reset password
+                        </DropdownItem>
+                        <DropdownItem
+                          key='delete-user'
+                          color='danger'
+                          className='text-danger'
+                          startContent={<PiTrash size={16} />}
+                          onClick={() => showDeleteModal(user)}
+                        >
+                          Delete user
+                        </DropdownItem>
+                      </DropdownMenu>
+                    </Dropdown>
                   </TableCell>
                 </TableRow>
               )}

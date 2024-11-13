@@ -24,15 +24,15 @@ class UpdateModuleRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'display_name' => 'nullable|string|max:255',
-            'user_id' => 'nullable|exists:users,id|unique:modules,user_id,' . $this->id,
-            'area_id' => 'nullable|exists:areas,id'
+            'area_id' => 'nullable|exists:areas,id',
+            'user_ids' => 'nullable|array',
+            'user_ids.*' => 'exists:users,id'
         ];
     }
 
     public function attributes()
     {
         return [
-            'user_id' => 'user',
             'area_id' => 'area'
         ];
     }

@@ -9,13 +9,12 @@ class Module extends Model
     protected $fillable = [
         'name',
         'display_name',
-        'user_id',
         'area_id'
     ];
 
-    public function user()
+    public function users()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(User::class);
     }
 
     public function area()

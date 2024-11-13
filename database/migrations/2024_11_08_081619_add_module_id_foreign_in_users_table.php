@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('modules', function (Blueprint $table) {
-            $table->dropForeign('user_id');
-            $table->dropColumn('user_id');
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreignId('module_id')->nullable()->after('remember_token')->constrained('modules')->cascadeOnUpdate()->nullOnDelete();
         });
     }
 
@@ -22,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('modules', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             //
         });
     }

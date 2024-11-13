@@ -21,7 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'password_changed'
+        'password_changed',
+        'module_id'
     ];
 
     /**
@@ -49,6 +50,6 @@ class User extends Authenticatable
 
     public function module()
     {
-        return $this->hasOne(Module::class);
+        return $this->belongsTo(Module::class);
     }
 }
