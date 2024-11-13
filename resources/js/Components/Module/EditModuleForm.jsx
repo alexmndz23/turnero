@@ -1,6 +1,6 @@
 import React from 'react'
 import { useForm } from '@inertiajs/react'
-import { Button, Input, Select, SelectItem } from '@nextui-org/react'
+import { Button, Chip, Input, Select, SelectItem } from '@nextui-org/react'
 
 export default function EditModuleForm ({ module, areas, users, onClose }) {
   const { data, setData, patch, processing, errors } = useForm({
@@ -49,7 +49,7 @@ export default function EditModuleForm ({ module, areas, users, onClose }) {
             variant='underlined'
             onChange={e => setData('area_id', e.target.value)}
           >
-            {(area) => <SelectItem key={area.id} value={area.id}>{area.name}</SelectItem>}
+            {(item) => <SelectItem key={item.id} value={item.id}>{item.name}</SelectItem>}
           </Select>
           {errors.area_id && <span className='text-red-500 text-sm'>{errors.area_id}</span>}
         </div>
@@ -60,10 +60,31 @@ export default function EditModuleForm ({ module, areas, users, onClose }) {
             items={users}
             selectedKeys={data.user_ids}
             variant='underlined'
-            onSelectionChange={e => setData('user_ids', [...e.keys()])}
+            isMultiline
+            onChange={e => setData('user_ids', e.target.value.split(','))}
             selectionMode='multiple'
+            classNames={{
+              value: 'h-auto'
+            }}
+            renderValue={(items) => {
+              return (
+                <div className='flex flex-wrap gap-2 pb-2'>
+                  {items.map((item) => (
+                    <Chip
+                      key={item.key}
+                      variant='flat'
+                      onClose={() => (
+                        setData('user_ids', data.user_ids.filter((userId) => userId !== item.data.id.toString()))
+                      )}
+                    >
+                      {item.data.name}
+                    </Chip>
+                  ))}
+                </div>
+              )
+            }}
           >
-            {(user) => <SelectItem key={user.id} value={user.id}>{user.name}</SelectItem>}
+            {(item) => <SelectItem key={item.id} value={item.id}>{item.name}</SelectItem>}
           </Select>
           {errors.user_ids && <span className='text-red-500 text-sm'>{errors.user_ids}</span>}
         </div>

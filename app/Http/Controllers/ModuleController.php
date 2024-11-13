@@ -40,9 +40,25 @@ class ModuleController extends Controller
     public function store(StoreModuleRequest $request)
     {
         try {
-            Module::create($request->validated());
+            DB::beginTransaction();
+
+            $module = Module::create([
+                'name' => $request->name,
+                'display_name' => $request->display_name,
+                'area_id' => $request->area_id
+            ]);
+
+            if (!empty($request->user_ids)) {
+                User::whereIn('id', $request->user_ids)->update(['module_id' => $module->id]);
+            }
+
+            DB::commit();
             return back()->with('success', 'Module created');
+        } catch (ModelNotFoundException $e) {
+            DB::rollBack();
+            return back()->with('error', 'Module not found');
         } catch (Exception $e) {
+            DB::rollBack();
             return back()->with('error', 'Unexpected error');
         }
     }

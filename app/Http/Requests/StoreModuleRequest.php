@@ -24,7 +24,9 @@ class StoreModuleRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'display_name' => 'nullable|string|max:255',
-            'area_id' => 'nullable|exists:areas,id'
+            'area_id' => 'nullable|exists:areas,id',
+            'user_ids' => 'nullable|array',
+            'user_ids.*' => 'exists:users,id'
         ];
     }
 
